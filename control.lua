@@ -1,6 +1,6 @@
 require("util")
 require("homeworld_defines")
-homeworld_config = require('config')
+--homeworld_config = require('config')
 require("helpers.assertion")
 require("helpers.actor")
 require("helpers.misc_helpers")

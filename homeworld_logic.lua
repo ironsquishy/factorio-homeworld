@@ -1,6 +1,6 @@
 Homeworld = {}
 
-local config = homeworld_config.homeworld
+local config = require('config').homeworld
 
 function Homeworld:init()
    self.state = {
@@ -119,11 +119,11 @@ end
 
 function Homeworld:change_tier_by( amount )
    local new_tier = self.state.tier + amount
-   
+
    if new_tier == 7 then
     game.set_game_state{game_finished = true, player_won = true, next_level = false, can_continue = true}
    end
-   
+
    if config.tiers[new_tier] then
       -- If upgrading...
       if amount > 0 then
@@ -312,7 +312,7 @@ function Homeworld:tick( tick )
          self:update_gui(player_index)
       end
    end
-   
+
    -- NOTE(luke): Show homeworld gui if they are holding 'portable electronics'.
    local pda_name = "portable-electronics"
    for player_index = 1, #game.players do
@@ -320,7 +320,7 @@ function Homeworld:tick( tick )
       local held_item = player.cursor_stack
 
       -- If player died, don't check for inventory
-      if held_item == nil then 
+      if held_item == nil then
          break
       end
 
