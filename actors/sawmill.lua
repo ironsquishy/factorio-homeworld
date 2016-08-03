@@ -1,6 +1,6 @@
 Sawmill = Actor{name = "Sawmill"}
 
-local config = homeworld_config.sawmill
+local config = require('config').sawmill
 
 function Sawmill:init()
     self:increment_saw_timer()

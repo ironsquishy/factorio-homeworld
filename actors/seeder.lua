@@ -1,5 +1,5 @@
 Seeder = Actor{name = "seeder"}
-local config = homeworld_config.seeder
+local config = require('config').seeder
 
 function Seeder:init()
    self:increment_timer()

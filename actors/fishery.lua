@@ -1,6 +1,6 @@
 Fishery = Actor{name = "fishery", use_entity_gui = true}
 
-local config = homeworld_config.fishery;
+local config = require('config').fishery;
 
 local fish_chunks = {}
 local fish_chunk_index = 1

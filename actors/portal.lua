@@ -1,6 +1,6 @@
 Portal = Actor{name = "portal", use_entity_gui = true}
 
-local config = homeworld_config.portal
+local config = require('config').portal
 
 function Portal:tick( tick )
    if ModuloTimer(config.update_interval) then

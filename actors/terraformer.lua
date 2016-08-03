@@ -7,7 +7,7 @@ local CURSOR_OFFSET = {
    [LEFT] = {x = -1, y = 0},
    [UP] = {x = 0, y = -1}
 }
-local config = homeworld_config.terraformer
+local config = require('config').terraformer
 
 function Terraformer:init()
    self.state.last_step_tick = game.tick

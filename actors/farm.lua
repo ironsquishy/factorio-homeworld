@@ -2,7 +2,7 @@ Farm = Actor{name = "farm", use_entity_gui = true}
 
 local STATE_GROWING = 1
 local STATE_RESETTING = 2
-local config = homeworld_config.farm;
+local config = require('config').farm;
 
 function Farm:init()
 	local state = self.state

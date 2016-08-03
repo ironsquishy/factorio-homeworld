@@ -1,7 +1,7 @@
 require("belt_actor")
 BeltThroughputReader = Actor{name = "belt_throughput_reader", superclass = BeltActor}
 
-local config = homeworld_config.belt_throughput_reader
+local config = require('config').belt_throughput_reader
 
 function BeltThroughputReader:init()
     local state = self.state
@@ -9,7 +9,7 @@ function BeltThroughputReader:init()
     state.snapshot_index = 1
 end
 
-function BeltThroughputReader:tick( dt ) 
+function BeltThroughputReader:tick( dt )
     -- Find adjacent belts.
     local input_belt, output_belt = self:find_input_output_belt()
     if input_belt and output_belt then
@@ -19,7 +19,7 @@ function BeltThroughputReader:tick( dt )
     else
         self:add_to_snapshots(nil)
     end
-    
+
     -- Average the transferred items and output it as a signal.
     if ModuloTimer(config.calculate_throughput_interval) then
         local throughput = self:calculate_throughput()
