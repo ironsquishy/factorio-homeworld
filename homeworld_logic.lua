@@ -318,6 +318,12 @@ function Homeworld:tick( tick )
    for player_index = 1, #game.players do
       local player = game.players[player_index]
       local held_item = player.cursor_stack
+
+      -- If player died, don't check for inventory
+      if held_item == nil then 
+         break
+      end
+
       local holding_pda = (held_item.valid_for_read and held_item.name == pda_name)
       if self.state.using_pda[player_index] and not holding_pda then
          self.state.using_pda[player_index] = nil

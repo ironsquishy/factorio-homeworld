@@ -62,6 +62,14 @@ function on_player_created( event )
    }
 end
 
+function on_player_respawned( event )
+  local player = game.players[event.player_index]
+  player.insert {
+    name = "portable-electronics",
+    count = 1
+  }
+end
+
 function on_resource_depleted( event )
 	if event.entity.name == "sand-source" then
 		event.entity.surface.set_tiles{{name = "dirt-dark", position = event.entity.position}}
