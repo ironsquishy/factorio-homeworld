@@ -12,7 +12,9 @@ function Homeworld:init()
       average_satisfaction_window = 120,
       claimed_rewards = {},
       gui = {},
-      using_pda = {}
+      using_pda = {},
+      --init for player HUD
+      isShowing_gui = false
    }
    self:increment_update_timer()
    global.homeworld_state = self.state
@@ -313,33 +315,23 @@ function Homeworld:tick( tick )
       end
    end
 
-   -- NOTE(luke): Show homeworld gui if they are holding 'portable electronics'.
-   local pda_name = "portable-electronics"
    for player_index = 1, #game.players do
       local player = game.players[player_index]
       local held_item = player.cursor_stack
-
       -- If player died, don't check for inventory
       if held_item == nil then
          break
-      end
-
-      local holding_pda = (held_item.valid_for_read and held_item.name == pda_name)
-      if self.state.using_pda[player_index] and not holding_pda then
-         self.state.using_pda[player_index] = nil
-         self:hide_gui(player_index)
-      elseif not self.state.using_pda[player_index] and holding_pda then
-         self:show_gui(player_index)
-         self.state.using_pda[player_index] = true
       end
    end
 end
 
 function Homeworld:show_gui( player_index )
+  --Added globale state to change...
+   self.state.isShowing_gui = true
    if self.state.gui[player_index] then
       return
    end
-
+   --Possibly can be optimize here..
    GUI.push_left_section(player_index)
    self.state.gui[player_index] = GUI.push_parent(GUI.frame("homeworld", "Homeworld", GUI.VERTICAL))
    GUI.label_data("tier", "Tier:", "1 / 6")
@@ -416,6 +408,8 @@ function Homeworld:update_gui( player_index )
 end
 
 function Homeworld:hide_gui( player_index )
+  --Added globale state to change...
+   self.state.isShowing_gui = false
    if self.state.gui[player_index] == nil then
       return
    end

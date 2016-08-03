@@ -51,23 +51,21 @@ function on_tick( event )
 end
 
 function on_player_created( event )
+
     local player = game.players[event.player_index]
+    --Added button for homeworld progress..
+    player.gui.top.add{type = "button", caption = "Homeworld", name = "Homeworld_btn"}
+
     player.insert{
         name = "homeworld_portal",
         count = 1
    }
-   player.insert{
-       name = "portable-electronics",
-       count = 1
-   }
 end
 
-function on_player_respawned( event )
-  local player = game.players[event.player_index]
-  player.insert {
-    name = "portable-electronics",
-    count = 1
-  }
+function on_player_respawned ( event )
+  --When player dies re-instate everything.
+  game.players[event.player_index].gui.top.add{type = "button", caption = "Homeworld", name = "Homeworld_btn"}
+
 end
 
 function on_resource_depleted( event )
@@ -118,6 +116,17 @@ function event_destroy_entity( entity )
     destroy_entity_actor(entity)
 end
 
+--Toggle logic for homeworld button...
+function on_toggle_homeworld_gui( event )
+  --If is not showing then show progress else hide gui.
+  if event.element.name == "Homeworld_btn" and not Homeworld.state.isShowing_gui then
+    local player = game.players[event.player_index]
+    Homeworld:show_gui(event.player_index)
+  else
+    Homeworld:hide_gui(event.player_index)
+  end
+end
+
 script.on_init(on_mod_init)
 script.on_load(on_mod_load)
 script.on_event(defines.events.on_built_entity, on_built_entity)
@@ -129,6 +138,7 @@ script.on_event(defines.events.on_robot_pre_mined, before_robot_mined)
 script.on_event(defines.events.on_resource_depleted, on_resource_depleted)
 script.on_event(defines.events.on_tick, on_tick)
 script.on_event(defines.events.on_player_respawned, on_player_respawned)
+script.on_event(defines.events.on_gui_click, on_toggle_homeworld_gui)
 
 remote.add_interface("homeworld", {
 	get_homeworld = function()
